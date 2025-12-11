@@ -437,3 +437,26 @@ header.header-scrolled {
 .producto-item-admin .botones-admin button:hover {
     transform: scale(1.05);
 }
+
+.footer-contenido {
+    display: flex; /* Usar Flexbox para alineación */
+    justify-content: center; /* Centrar los ítems horizontalmente */
+    align-items: center; /* Centrar los ítems verticalmente */
+    gap: 10px; /* Espacio entre el icono y el nombre */
+}
+
+/* Estilos del enlace del icono */
+.footer-contenido a {
+    text-decoration: none; /* Quitar el subrayado del enlace */
+    color: inherit; /* Heredar el color del footer (blanco) */
+}
+
+.instagram-icon:hover {
+    color: #C13584; /* Cambiar a un color un poco más oscuro al pasar el ratón */
+}
+
+.nombre-footer {
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    opacity: 0.8; /* Ligeramente transparente */
+}
