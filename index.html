@@ -32,7 +32,7 @@
             <h2>Productos de Belleza Exclusivos</h2>
             <p>Descubre nuestra selección única para realzar tu belleza.</p>
             
-            <a href="https://wa.me/50558068013?text=Hola,%20quiero%20más%20información" class="boton-whatsapp" target="_blank">
+            <a href="https://wa.me/50558068013?text=Hola,%20quiero%20más%20información%20acerca%20de%20los%20productos%20de%20Ángeles%20Beauty" class="boton-whatsapp" target="_blank">
                 Contáctanos por WhatsApp
             </a>
         </section>
@@ -64,8 +64,6 @@
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
       import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
       
-      // ¡¡MUY IMPORTANTE!!
-      // Pega aquí tu objeto 'firebaseConfig' que copiaste de la consola de Firebase
       const firebaseConfig = {
     apiKey: "AIzaSyAPUPxZNuJfX3KtiI1p73AAfDgNqVo8a-g",
     authDomain: "tienda-angeles-beauty.firebaseapp.com",
@@ -136,7 +134,6 @@
                       const textoMensaje = `Hola, me interesa el producto ${producto.nombre}`;
                       const textoCodificado = encodeURIComponent(textoMensaje);
 
-                      // ¡¡RECUERDA PONER TU NÚMERO REAL AQUÍ!!
                       const enlaceWhatsApp = `https://wa.me/50558068013?text=${textoCodificado}`;
                       
                       // --- Creación de la tarjeta ---
@@ -149,7 +146,6 @@
                           </a>
                       `;
                       
-                      // --- ¡LA LÍNEA QUE FALTABA! ---
                       galeria.appendChild(tarjeta);
                   });
 
