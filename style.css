@@ -70,36 +70,30 @@ h1 {
     margin: 10px 0; /* Espacio arriba y abajo */
 }
 
-/* --- 5. Estilos de Botones --- */
+/* --- 5. Estilos de Botones (Modificación Reforzada) --- */
 
-/* Seleccionamos ambas clases de botones con una coma */
 .boton-whatsapp,
 .boton-comprar {
-    display: inline-block; /* Importante para que respete el padding */
-    background-color: #d13885; /* Mismo rosa que el título */
-    color: #ffffff; /* Texto en color blanco */
-    padding: 12px 24px; /* Espacio interno (12px arriba/abajo, 24px lados) */
+    /* Mantenemos Flexbox para el centrado general: */
+    display: flex;       
+    justify-content: center; 
+    align-items: center;     
     
-    text-decoration: none; /* ¡CRUCIAL! Quita el feo subrayado */
+    /* ⭐ AÑADIR/MODIFICAR ESTAS LÍNEAS PARA FIJAR EL TEXTO: ⭐ */
+    text-align: center;         /* Asegura el centrado de texto */
+    line-height: 1;             /* Elimina el espacio extra entre líneas (1 es el valor normal) */
+    white-space: nowrap;        /* IMPIDE que el texto se rompa en dos líneas */
     
-    border-radius: 5px; /* Esquinas redondeadas */
-    font-weight: bold; /* Texto en negrita */
-    margin-top: 10px; /* Un pequeño margen superior para separarlo */
-    
-    /* Transición suave para el efecto hover */
+    /* Tus estilos originales: */
+    background-color: #d13885; 
+    color: #ffffff; 
+    padding: 12px 24px; 
+    text-decoration: none; 
+    border-radius: 5px; 
+    font-weight: bold; 
+    margin-top: 10px; 
     transition: background-color 0.3s ease;
 }
-
-/* * Esto es una "pseudo-clase". 
- * Define el estilo que tendrá el botón CUANDO pases el mouse por encima.
-*/
-.boton-whatsapp:hover,
-.boton-comprar:hover {
-    background-color: #a12a68; /* Un rosa un poco más oscuro */
-    cursor: pointer; /* Cambia el cursor a una "manita" */
-}
-/* --- 6. Estilos del Encabezado (Header) --- */
-
 /* --- 6. Estilos del Encabezado (Header) --- */
 header {
     display: flex;

@@ -58,111 +58,124 @@
     </footer>
 
 
-    <script type="module">
-    
-      // --- 1. INICIALIZACIÓN DE FIREBASE ---
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-      import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
-      
-      const firebaseConfig = {
-    apiKey: "AIzaSyAPUPxZNuJfX3KtiI1p73AAfDgNqVo8a-g",
-    authDomain: "tienda-angeles-beauty.firebaseapp.com",
-    projectId: "tienda-angeles-beauty",
-    storageBucket: "tienda-angeles-beauty.firebasestorage.app",
-    messagingSenderId: "913588395045",
-    appId: "1:913588395045:web:ce50c2f7a296c85ecff3cc"
-  };
+   <script type="module">
+    
+      // --- 1. INICIALIZACIÓN DE FIREBASE ---
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+      import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+      
+      const firebaseConfig = {
+        apiKey: "AIzaSyAPUPxZNuJfX3KtiI1p73AAfDgNqVo8a-g",
+        authDomain: "tienda-angeles-beauty.firebaseapp.com",
+        projectId: "tienda-angeles-beauty",
+        storageBucket: "tienda-angeles-beauty.firebasestorage.app",
+        messagingSenderId: "913588395045",
+        appId: "1:913588395045:web:ce50c2f7a296c85ecff3cc"
+      };
 
-      // Inicializa Firebase App
-      const app = initializeApp(firebaseConfig);
-      // Inicializa Cloud Firestore
-      const db = getFirestore(app);
+      // Inicializa Firebase App
+      const app = initializeApp(firebaseConfig);
+      // Inicializa Cloud Firestore
+      const db = getFirestore(app);
 
-      
-      // --- 2. LÓGICA DE LA PÁGINA (HEADER, MENÚ Y PRODUCTOS) ---
-      
-      // Espera a que todo el contenido de la página se cargue
-      window.addEventListener('DOMContentLoaded', (event) => {
+      // ⭐ NUEVA CONSTANTE: Número de WhatsApp para simplificar la gestión.
+      const WHATSAPP_NUMBER = "50558068013"; 
+      
+      // --- 2. LÓGICA DE LA PÁGINA (HEADER, MENÚ Y PRODUCTOS) ---
+      
+      window.addEventListener('DOMContentLoaded', (event) => {
 
-          /* CÓDIGO 1: HEADER STICKY */
-          const header = document.querySelector('header');
-          if (header) { 
-              window.addEventListener('scroll', function() {
-                  if (window.scrollY > 50) {
-                      header.classList.add('header-scrolled');
-                  } else {
-                      header.classList.remove('header-scrolled');
-                  }
-              });
-          }
+          /* CÓDIGO 1: HEADER STICKY (sin cambios) */
+          const header = document.querySelector('header');
+          if (header) { 
+              window.addEventListener('scroll', function() {
+                  if (window.scrollY > 50) {
+                      header.classList.add('header-scrolled');
+                  } else {
+                      header.classList.remove('header-scrolled');
+                  }
+              });
+          }
 
-          /* CÓDIGO 2: MENÚ HAMBURGUESA */
-          const botonMenu = document.querySelector('#menu-hamburguesa');
-          const menuPrincipal = document.querySelector('#menu-principal');
-          if (botonMenu && menuPrincipal) {
-              botonMenu.addEventListener('click', () => {
-                  menuPrincipal.classList.toggle('menu-abierto');
-              });
-          }
-
-
-          /* CÓDIGO 3: CARGAR PRODUCTOS DESDE FIRESTORE (CORREGIDO) */
-          
-          async function cargarProductos() {
-              const galeria = document.querySelector('.galeria-productos');
-              
-              try {
-                  const productosCol = collection(db, 'productos');
-                  const productosSnapshot = await getDocs(productosCol);
-                  
-                  if (productosSnapshot.empty) {
-                      galeria.innerHTML = "<p>No hay productos para mostrar en este momento.</p>";
-                      return; 
-                  }
-                  
-                  galeria.innerHTML = ""; // Limpiamos el "Cargando..."
-                  
-                  productosSnapshot.forEach(doc => {
-                      const producto = doc.data(); 
-
-                      console.log("Datos recibidos de Firebase:", producto);
-                      
-                      const tarjeta = document.createElement('article');
-                      tarjeta.className = 'tarjeta-producto'; 
-
-                      // --- Arreglo de WhatsApp ---
-                      const textoMensaje = `Hola, me interesa el producto ${producto.nombre}`;
-                      const textoCodificado = encodeURIComponent(textoMensaje);
-
-                      const enlaceWhatsApp = `https://wa.me/50558068013?text=${textoCodificado}`;
-                      
-                      // --- Creación de la tarjeta ---
-                      tarjeta.innerHTML = `
-                          <img src="${producto.imagenUrl}" alt="Imagen de ${producto.nombre}">
-                          <h3>${producto.nombre}</h3>
-                          <p class="precio">${producto.precio}</p>
-                          <a href="${enlaceWhatsApp}" class="boton-comprar" target="_blank">
-                              Preguntar por WhatsApp
-                          </a>
-                      `;
-                      
-                      galeria.appendChild(tarjeta);
-                  });
-
-              } catch (error) {
-                  console.error("Error al cargar productos: ", error);
-                  galeria.innerHTML = "<p>Error al cargar los productos. Intenta recargar la página.</p>";
-              }
-          }
-
-          // Llamamos a la función para que se ejecute
-          cargarProductos();
-
-      }); // Fin del 'DOMContentLoaded'
-
-    </script>
-
-</body>
-</html>
+          /* CÓDIGO 2: MENÚ HAMBURGUESA (sin cambios) */
+          const botonMenu = document.querySelector('#menu-hamburguesa');
+          const menuPrincipal = document.querySelector('#menu-principal');
+          if (botonMenu && menuPrincipal) {
+              botonMenu.addEventListener('click', () => {
+                  menuPrincipal.classList.toggle('menu-abierto');
+              });
+          }
 
 
+          /* CÓDIGO 3: CARGAR PRODUCTOS DESDE FIRESTORE (MODIFICADO) */
+          
+          async function cargarProductos() {
+              const galeria = document.querySelector('.galeria-productos');
+              
+              try {
+                  const productosCol = collection(db, 'productos');
+                  const productosSnapshot = await getDocs(productosCol);
+                  
+                  if (productosSnapshot.empty) {
+                      galeria.innerHTML = "<p>No hay productos para mostrar en este momento.</p>";
+                      return; 
+                  }
+                  
+                  galeria.innerHTML = ""; // Limpiamos el "Cargando..."
+                  
+                  productosSnapshot.forEach(doc => {
+                      const producto = doc.data(); 
+
+                      console.log("Datos recibidos de Firebase:", producto);
+                      
+                      const tarjeta = document.createElement('article');
+                      tarjeta.className = 'tarjeta-producto'; 
+
+                      // ----------------------------------------------------
+                      // ⭐ ARREGLO DE WHATSAPP: Mensaje Detallado 
+                      // ----------------------------------------------------
+
+                      // 1. Construir el mensaje con Nombre, Precio y Enlace de Imagen
+                      let mensaje = `Hola... Vengo de Ángeles Beauty y me interesa este producto: \n\n`;
+                      mensaje += `Producto: ${producto.nombre}\n`;
+                      mensaje += `Precio: ${producto.precio}\n\n`;
+                      
+                      // Agregamos el enlace de la imagen. WhatsApp solo acepta texto/enlaces.
+                      if (producto.imagenUrl) {
+                          mensaje += `Presiona el enlace para ver imagen: ${producto.imagenUrl}\n\n`;
+                      }
+
+                      mensaje += `¿Podrías darme más detalles? Gracias.`;
+
+
+                      // 2. Codificar el mensaje
+                      const textoCodificado = encodeURIComponent(mensaje);
+                      
+                      // 3. Crear el enlace de WhatsApp
+                      const enlaceWhatsApp = `https://wa.me/${WHATSAPP_NUMBER}?text=${textoCodificado}`;
+                      
+                      // --- Creación de la tarjeta (sin cambios estructurales) ---
+                      tarjeta.innerHTML = `
+                          <img src="${producto.imagenUrl}" alt="Imagen de ${producto.nombre}">
+                          <h3>${producto.nombre}</h3>
+                          <p class="precio">${producto.precio}</p>
+                          <a href="${enlaceWhatsApp}" class="boton-comprar" target="_blank">
+                              Preguntar por WhatsApp
+                          </a>
+                      `;
+                      
+                      galeria.appendChild(tarjeta);
+                  });
+
+              } catch (error) {
+                  console.error("Error al cargar productos: ", error);
+                  galeria.innerHTML = "<p>Error al cargar los productos. Intenta recargar la página.</p>";
+              }
+          }
+
+          // Llamamos a la función para que se ejecute
+          cargarProductos();
+
+      }); // Fin del 'DOMContentLoaded'
+
+</script>
